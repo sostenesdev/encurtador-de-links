@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Button, TextField, FormControlLabel, Checkbox, Link, Box, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Grid2 from '@mui/material/Grid2'; // Importando Grid2
 import loginService from '../../services/authService';
 import { useLoading } from '../../contexts/LoadingContext';
-const theme = createTheme();
+import Card from '@mui/material/Card';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -14,11 +12,17 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {handleLogin} = loginService();
+  const [error, setError] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
     handleLogin(email, password).then((response) => {
+        if (!response || response.status == 401) {
+            setError(true);
+            console.log('error',response);
+            return;
+        }
         localStorage.setItem('token', response.access_token);
         navigate('/');
     }).catch((error) => {
@@ -29,8 +33,9 @@ function LoginPage() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" >
+        <Card sx={{ padding: 6, marginTop: 10 }} 
+        variant="outlined">
         <Box
           sx={{
             marginTop: 8,
@@ -50,29 +55,28 @@ function LoginPage() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
+              error={error}
+              id="username"
+              label="Usuário"
               name="email"
               autoComplete="email"
+              variant='standard'
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <TextField
-              margin="normal"
+            <TextField 
               required
               fullWidth
+              error={error}
               name="password"
-              label="Password"
+              label="Senha"
               type="password"
               id="password"
               autoComplete="current-password"
+              variant='standard'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"
@@ -80,24 +84,12 @@ function LoginPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Entrar
             </Button>
-            <Grid2 container>
-              <Grid2 xs={12} sm={6}>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid2>
-              <Grid2>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid2>
-            </Grid2>
           </Box>
         </Box>
+        </Card>
       </Container>
-    </ThemeProvider>
   );
 }
 
