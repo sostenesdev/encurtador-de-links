@@ -54,10 +54,10 @@ export default function Sidebar(props) {
         <><Toolbar >
         <Stack>
         <Typography variant="h6" noWrap component="div">
-            Teste
+            <img src="http://maisemprego.serra.es.gov.br/lib/serra_mais_emprego/images/logo-serra.png" style={{paddingTop: '6px'}} alt="Logo" width="100%" />
         </Typography>
         <Typography variant="p" noWrap component="div">
-            Aplicativo Teste
+            Encurtador de Links
         </Typography>
         </Stack>
     </Toolbar>
@@ -103,7 +103,7 @@ export default function Sidebar(props) {
                     <MenuIcon />
                   </IconButton>
                   <Typography variant="h6" noWrap component="div">
-                    App Teste
+                    Encurtador de Links
                   </Typography>
                   <Box sx={{ ml: 'auto' }}>
                   <IconButton color="inherit">

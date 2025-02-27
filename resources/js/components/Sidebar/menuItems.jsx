@@ -4,6 +4,7 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import PeopleIcon from '@mui/icons-material/People';
+import ShareIcon from '@mui/icons-material/Share';
 
 export const getMenuItems = () =>{
     const navigate = useNavigate()
@@ -12,6 +13,11 @@ export const getMenuItems = () =>{
         texto: 'Home',
         acao: () => navigate('/'),
         icone: <HomeIcon />
+    },
+    {
+        texto: 'Links',
+        acao: () => navigate('/links'),
+        icone: <ShareIcon />
     },
     {
         texto: 'Sobre',
