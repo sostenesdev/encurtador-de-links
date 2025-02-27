@@ -4,6 +4,9 @@ import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { getLinks } from '../../services/linkService';
 import { useLoading } from '../../contexts/LoadingContext';
+import { Box, Button } from '@mui/material';
+import { Add, Edit, Delete } from '@mui/icons-material';
+import CustomLinksModal from './CustomLinksModal';
 
 const initialData ={
     page: 0,
@@ -13,7 +16,9 @@ const initialData ={
 }
 function CustomLinks() {
     const [data, setData] = React.useState(initialData);
+    const [rowSelected, setRowSelected] = React.useState(null);
     const { setLoading } = useLoading();
+    const [open, setOpen] = React.useState(false);
 
     const fetchUsuarios = async () => {
         setLoading(true);
@@ -40,8 +45,23 @@ function CustomLinks() {
       ];
 
       const paginationModel = { page: 0, pageSize: 5 };
+
+    const handleClose = () =>{
+        setOpen(!open);
+    }
+
   return <>
+            <CustomLinksModal open={open} handleClose={handleClose} item={rowSelected} />
             <Typography variant="h6" noWrap component="div">Links</Typography>
+            <Box sx={{ display: 'flex' , justifyContent: 'flex-end', gap:1, marginBottom: 2 }}>
+                {rowSelected && <>
+                    <Button variant="contained" color="error" onClick={() => {setOpen(true)}}> <Delete /> Remover </Button>
+                    <Button variant="contained" color="secondary" onClick={() => {setOpen(true)}}> <Edit /> Editar </Button>
+                </>}
+                <Button variant="contained" color="primary" onClick={() => {setOpen(true)}}>
+                <Add /> Novo
+                </Button>
+            </Box>
             <Paper sx={{ height: 400, width: '100%' }}>
                 <DataGrid
                     rows={data.rows}
@@ -53,6 +73,9 @@ function CustomLinks() {
                     pageSize={data.pageSize}
                     rowSelection={true}
                     checkboxSelection={false}
+                    onRowClick={(selected) => {
+                        setRowSelected(selected.row)
+                    }}
                     
                 />
             </Paper>
