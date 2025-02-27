@@ -44,9 +44,9 @@ function LoginPage() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          {/* <Avatar sx={{ m: 1,}}> */}
+            <img src='https://ioes.dio.es.gov.br/theme/Es/css/subtemas/diariodaserra_logo.png' alt='Logo' width='33%' />
+          {/* </Avatar> */}
           <Typography component="h1" variant="h5">
             Login
           </Typography>

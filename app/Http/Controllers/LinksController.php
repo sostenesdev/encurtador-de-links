@@ -85,4 +85,13 @@ class LinksController extends Controller
 
         return JSON::response(['error' => 'Link not found'], 404);
     }
+
+    //crie um método para gerar um slug à partir da description considere remover os caracteres especiais  do português brasileiro
+    public function generateSlug($description)
+    {
+        $slug = str_replace(' ', '-', $description);
+        $slug = preg_replace('/[^\w\d\-\_]/', '', $slug);
+        return $slug;
+    }
+    
 }

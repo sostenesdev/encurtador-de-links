@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, Links } from 'react-router-dom';
 
 //Fontes
 import '@fontsource/roboto/300.css';
@@ -19,6 +19,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { LoadingProvider } from './contexts/LoadingContext';
 import LoadingOverlay from './components/LoadingOverlay';
 import Usuarios from './Pages/Usuarios';
+import CustomLinks from './Pages/CustomLinks';
 
 const getToken = () => {
   return localStorage.getItem('token');
@@ -42,7 +43,7 @@ function App() {
             <Route path="/" element={<ProtectedRoute element={PageLayout}><Home /></ProtectedRoute>} />
             <Route path="/about" element={<ProtectedRoute element={PageLayout}><About /></ProtectedRoute>} />
             <Route path="/usuarios" element={<ProtectedRoute element={PageLayout}><Usuarios /></ProtectedRoute>} />
-            <Route path="/links" element={<ProtectedRoute element={PageLayout}><Usuarios /></ProtectedRoute>} />
+            <Route path="/links" element={<ProtectedRoute element={PageLayout}><CustomLinks /></ProtectedRoute>} />
           </Routes>
           {/* </Sidebar> */}
         </BrowserRouter>

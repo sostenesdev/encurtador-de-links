@@ -47,10 +47,14 @@ function Usuarios() {
                     columns={columns}
                     initialState={{ pagination: { paginationModel } }}
                     pageSizeOptions={[5, 10]}
-                    checkboxSelection
                     sx={{ border: 0 }}
                     page={data.page}
                     pageSize={data.pageSize}
+                    rowSelection={true}
+                    checkboxSelection={false}
+                    onRowClick={(selected) => {
+                        console.log('row', selected.row)
+                    }}
                 />
             </Paper>
 
