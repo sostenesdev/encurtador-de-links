@@ -20,6 +20,7 @@ import { LoadingProvider } from './contexts/LoadingContext';
 import LoadingOverlay from './components/LoadingOverlay';
 import Usuarios from './Pages/Usuarios';
 import CustomLinks from './Pages/CustomLinks';
+import LinkRedirect from './Pages/LinkRedirect';
 
 const getToken = () => {
   return localStorage.getItem('token');
@@ -40,10 +41,11 @@ function App() {
         {/* <Sidebar> */}
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/" element={<ProtectedRoute element={PageLayout}><Home /></ProtectedRoute>} />
+            <Route path="/:slug" element={<LinkRedirect />} />
             <Route path="/about" element={<ProtectedRoute element={PageLayout}><About /></ProtectedRoute>} />
             <Route path="/usuarios" element={<ProtectedRoute element={PageLayout}><Usuarios /></ProtectedRoute>} />
             <Route path="/links" element={<ProtectedRoute element={PageLayout}><CustomLinks /></ProtectedRoute>} />
+            
           </Routes>
           {/* </Sidebar> */}
         </BrowserRouter>

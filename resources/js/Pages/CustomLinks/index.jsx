@@ -20,7 +20,7 @@ function CustomLinks() {
     const { setLoading } = useLoading();
     const [open, setOpen] = React.useState(false);
 
-    const fetchUsuarios = async () => {
+    const getLinkList = async () => {
         setLoading(true);
         getLinks().then(response => {
             setData(response?.data ?? initialData)
@@ -32,7 +32,7 @@ function CustomLinks() {
     }
 
     React.useEffect(() => {
-        fetchUsuarios();
+        getLinkList();
     }, []);
 
     const columns = [
@@ -48,6 +48,7 @@ function CustomLinks() {
 
     const handleClose = () =>{
         setOpen(!open);
+        getLinkList();
     }
 
   return <>
@@ -64,7 +65,7 @@ function CustomLinks() {
             </Box>
             <Paper sx={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={data.rows}
+                    rows={data}
                     columns={columns}
                     initialState={{ pagination: { paginationModel } }}
                     pageSizeOptions={[5, 10]}

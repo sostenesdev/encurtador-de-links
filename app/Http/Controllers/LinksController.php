@@ -3,38 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Links;
 
 class LinksController extends Controller
 {
     public function index($slug)
     {
-        $link = Link::where('slug', $slug)->first();
+        $link = Links::where('slug', $slug)->first();
 
         if ($link) {
             $link->visits++;
             $link->save();
-            return redirect($link->url);
+            return $link;
         }
 
-        return JSON::response(['error' => 'Link not found'], 404);
+        return response->json(['error' => 'Link not found'], 404);
     }
 
     public function store(Request $request)
     {
+
         $request->validate([
             'url' => 'required|url',
             'description' => 'required'
         ]);
 
-        $slug = $request->slug != null ? $request->slug : base_convert($id, 10, 36);
+        
 
-        $link = new Link();
+        $slug = $request->slug != null ? $request->slug : generateSlug($description);
+
+        $link = new Links();
         $link->url = $request->url;
         $link->slug = $slug;
         $link->description = $request->description;
         $link->save();
 
-        return JSON::response($link);
+        return $link;
     }
 
     //update method
@@ -45,9 +49,9 @@ class LinksController extends Controller
             'description' => 'required'
         ]);
 
-        $link = Link::find($id);
+        $link = Links::find($id);
 
-        $slug = $request->slug != null ? $request->slug : base_convert($id, 10, 36);
+        $slug = $request->slug != null ? $request->slug : generateSlug($description);
 
         if ($link) {
             $link->url = $request->url;
@@ -55,10 +59,10 @@ class LinksController extends Controller
             $link->slug = $slug;
             $link->save();
 
-            return JSON::response($link);
+            return $link;
         }
 
-        return JSON::response(['error' => 'Link not found'], 404);
+        return response->json(['error' => 'Link not found'], 404);
     }
 
     public function show($slug)
@@ -76,7 +80,7 @@ class LinksController extends Controller
 
     public function destroy($id)
     {
-        $link = Link::find($id);
+        $link = Links::find($id);
 
         if ($link) {
             $link->delete();
@@ -85,6 +89,14 @@ class LinksController extends Controller
 
         return JSON::response(['error' => 'Link not found'], 404);
     }
+
+    //list links
+    public function list()
+    {
+        return Links::all();
+    }
+
+    
 
     //crie um método para gerar um slug à partir da description considere remover os caracteres especiais  do português brasileiro
     public function generateSlug($description)
