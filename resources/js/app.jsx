@@ -42,6 +42,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/:slug" element={<LinkRedirect />} />
+            <Route path="/" element={<ProtectedRoute element={PageLayout}><Home /></ProtectedRoute>} />
             <Route path="/about" element={<ProtectedRoute element={PageLayout}><About /></ProtectedRoute>} />
             <Route path="/usuarios" element={<ProtectedRoute element={PageLayout}><Usuarios /></ProtectedRoute>} />
             <Route path="/links" element={<ProtectedRoute element={PageLayout}><CustomLinks /></ProtectedRoute>} />
